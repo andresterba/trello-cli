@@ -1,10 +1,5 @@
 package commands
 
-import (
-	"gitlab.cloudf.de/andre/trello-cli/config"
-	"gitlab.cloudf.de/andre/trello-cli/trello"
-)
-
 type shoppingListCommand struct {
 }
 
@@ -25,20 +20,27 @@ func (command shoppingListCommand) IsForCommand(commandParams []string) bool {
 }
 
 func (command shoppingListCommand) Execute(commandParams []string) error {
-	config, err := config.LoadConfig(config.GetConfigPath())
-	if err != nil {
-		return err
-	}
-	err, trelloService := trello.CreateNewTrelloService(
-		config,
-	)
+	trelloService, err := getTrelloService()
 	if err != nil {
 		return err
 	}
 
-	err = trelloService.GetShoppingList()
-	if err != nil {
-		return err
+	commandParamsLength := len(commandParams)
+
+	if commandParamsLength == 1 {
+		err = trelloService.GetShoppingList()
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	if commandParams[1] == "add" {
+		err = trelloService.AddItemToShoppingList(commandParams[2])
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

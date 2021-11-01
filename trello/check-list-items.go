@@ -24,11 +24,7 @@ func printCheckListItem(item trello.CheckItem) {
 }
 
 func isCheckItemCompleted(item trello.CheckItem) bool {
-	if item.State == "incomplete" {
-		return false
-	}
-
-	return true
+	return item.State != "incomplete"
 }
 
 func printCompletedChecklistItem(item trello.CheckItem) {
