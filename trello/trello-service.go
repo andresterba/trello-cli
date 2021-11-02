@@ -56,3 +56,26 @@ func (ts *TrelloService) AddItemToShoppingList(itemName string) error {
 
 	return nil
 }
+
+func (ts *TrelloService) DeleteItemFromShoppingList(itemName string) error {
+	checklist, err := ts.getShoppingCardChecklist()
+	if err != nil {
+		return err
+	}
+
+	for _, checkItem := range checklist.CheckItems {
+		if checkItem.Name == itemName {
+			err = ts.client.Delete(
+				fmt.Sprintf("checklists/%s/checkItems/%s", checklist.ID, checkItem.ID),
+				trello.Defaults(),
+				checklist,
+			)
+
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}

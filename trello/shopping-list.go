@@ -33,3 +33,7 @@ func (ts *TrelloService) getShoppingCardChecklist() (*trello.Checklist, error) {
 		ts.config.ShoppingListCardName,
 	)
 }
+
+// func (ts *TrelloService) getChecklistItem() (*trello.CheckItem, error) {
+
+// }

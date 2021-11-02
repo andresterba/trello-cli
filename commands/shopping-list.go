@@ -43,5 +43,12 @@ func (command shoppingListCommand) Execute(commandParams []string) error {
 		}
 	}
 
+	if commandParams[1] == "delete" || commandParams[1] == "del" {
+		err = trelloService.DeleteItemFromShoppingList(commandParams[2])
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
