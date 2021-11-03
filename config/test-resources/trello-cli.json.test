@@ -1,7 +1,15 @@
 {
-	"app_key": "my-app-key-1337",
-	"token": "my-token-1337",
-	"shopping_board_id": "board-id-wasd",
-    "shopping_list_card_name": "shopping-list",
-    "todo_board_id": "board-id-todo"
+    "default_context": "work",
+    "app_key": "my-app-key-1337",
+    "token": "my-token-1337",
+    "work_config": {
+        "board_id": "board-id-work"
+    },
+    "personal_config": {
+        "board_id": "board-id-personal"
+    },
+    "shopping_config": {
+        "board_id": "board-id-shopping",
+        "list_card_name": "shopping-list"
+    }
 }

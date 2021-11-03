@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/andresterba/trello-cli/commands"
+	"github.com/andresterba/trello-cli/config"
 )
 
 func checkForError(err error) {
@@ -33,9 +34,18 @@ func main() {
 		os.Exit(1)
 	}
 
+	config, err := config.LoadConfig(config.GetConfigPath())
+	checkForError(err)
+
 	params := args[1:]
 
 	commandExecuted := false
+
+	determineAndSetContext(params, config)
+	err = config.WriteConfig()
+	checkForError(err)
+
+	params = args[3:]
 
 	for _, command := range commands.GetRegisteredCommands() {
 		if command.IsForCommand(params) {
@@ -51,4 +61,21 @@ func main() {
 		showHelp()
 		os.Exit(1)
 	}
+}
+
+func determineAndSetContext(params []string, config *config.Config) {
+	if params[0] == "--context" {
+		context := params[1]
+		if checkIfContextIsValid(context) {
+			config.DefaultContext = context
+		}
+	}
+}
+
+func checkIfContextIsValid(context string) bool {
+	if context == commands.PersonalContext || context == commands.WorkContext {
+		return true
+	}
+
+	return false
 }

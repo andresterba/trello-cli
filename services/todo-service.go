@@ -31,7 +31,7 @@ func (ts *TodoService) GetCardsThatAreDueToday() error {
 	var cardsDueToday []*trello.Card
 
 	for _, card := range cards {
-		if isDueSetOnCard(card) && isCardDueToday(*card.Due) {
+		if isDueSetOnCard(card) && isCardDueToday(*card.Due) && !isCardDueCompleted(card) {
 			cardsDueToday = append(cardsDueToday, card)
 		}
 	}
@@ -52,7 +52,7 @@ func (ts *TodoService) GetCardsThatAreDueThisMonth() error {
 	var cardsDueThisMonth []*trello.Card
 
 	for _, card := range cards {
-		if isDueSetOnCard(card) && isCardDueThisMonth(*card.Due) {
+		if isDueSetOnCard(card) && isCardDueThisMonth(*card.Due) && !isCardDueCompleted(card) {
 			cardsDueThisMonth = append(cardsDueThisMonth, card)
 		}
 	}
@@ -66,6 +66,10 @@ func (ts *TodoService) GetCardsThatAreDueThisMonth() error {
 
 func isDueSetOnCard(card *trello.Card) bool {
 	return card.Due != nil
+}
+
+func isCardDueCompleted(card *trello.Card) bool {
+	return card.DueComplete
 }
 
 func isCardDueToday(dueTime time.Time) bool {

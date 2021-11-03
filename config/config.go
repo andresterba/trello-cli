@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/user"
@@ -18,12 +19,26 @@ const (
 	configFileName = ".trello-cli.json"
 )
 
+type WorkConfig struct {
+	BoardID string `json:"board_id,omitempty"`
+}
+
+type PersonalConfig struct {
+	BoardID string `json:"board_id"`
+}
+
+type ShoppingConfig struct {
+	BoardID      string `json:"board_id"`
+	ListCardName string `json:"list_card_name"`
+}
+
 type Config struct {
-	AppKey               string `json:"app_key"`
-	Token                string `json:"token"`
-	ShoppingBoardID      string `json:"shopping_board_id"`
-	ShoppingListCardName string `json:"shopping_list_card_name"`
-	TodoBoardID          string `json:"todo_board_id"`
+	DefaultContext string         `json:"default_context,omitempty"`
+	AppKey         string         `json:"app_key,omitempty"`
+	Token          string         `json:"token,omitempty"`
+	WorkConfig     WorkConfig     `json:"work_config,omitempty"`
+	PersonalConfig PersonalConfig `json:"personal_config,omitempty"`
+	ShoppingConfig ShoppingConfig `json:"shopping_config,omitempty"`
 }
 
 func GetConfigPath() string {
@@ -50,4 +65,14 @@ func LoadConfig(pathToConfig string) (*Config, error) {
 	}
 
 	return config, nil
+}
+
+func (c *Config) WriteConfig() error {
+	file, _ := json.MarshalIndent(c, "", " ")
+	err := ioutil.WriteFile(GetConfigPath(), file, 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

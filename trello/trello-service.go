@@ -14,9 +14,9 @@ type TrelloService struct {
 
 func CreateNewTrelloService(config *config.Config) (*TrelloService, error) {
 	client := trello.NewClient(config.AppKey, config.Token)
-	if !isTrelloClientWorking(client, config.ShoppingBoardID) {
+	if !isTrelloClientWorking(client, config.PersonalConfig.BoardID) {
 		return nil, fmt.Errorf(
-			"could not connect to the trello api. Please check your tokens or the board  id",
+			"could not connect to the trello api. Please check your tokens or the board id",
 		)
 	}
 
@@ -70,7 +70,7 @@ func (ts *TrelloService) GetChecklistFromCard(boardID string, cardName string) (
 
 	return nil, fmt.Errorf(
 		"could not find shopping list checklist with name %s",
-		ts.config.ShoppingListCardName,
+		ts.config.PersonalConfig.BoardID,
 	)
 }
 

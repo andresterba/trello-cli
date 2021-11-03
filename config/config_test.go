@@ -21,7 +21,8 @@ func TestGetConfig(test *testing.T) {
 
 	testForString(test, "my-app-key-1337", config.AppKey)
 	testForString(test, "my-token-1337", config.Token)
-	testForString(test, "board-id-wasd", config.ShoppingBoardID)
-	testForString(test, "shopping-list", config.ShoppingListCardName)
-	testForString(test, "board-id-todo", config.TodoBoardID)
+	testForString(test, "board-id-personal", config.PersonalConfig.BoardID)
+	testForString(test, "board-id-shopping", config.ShoppingConfig.BoardID)
+	testForString(test, "shopping-list", config.ShoppingConfig.ListCardName)
+	testForString(test, "board-id-work", config.WorkConfig.BoardID)
 }
