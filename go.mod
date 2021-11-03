@@ -1,4 +1,4 @@
-module gitlab.cloudf.de/andre/trello-cli
+module github.com/andresterba/trello-cli
 
 go 1.17
 

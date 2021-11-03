@@ -20,7 +20,7 @@ func (command shoppingListCommand) IsForCommand(commandParams []string) bool {
 }
 
 func (command shoppingListCommand) Execute(commandParams []string) error {
-	trelloService, err := getTrelloService()
+	shoppingListService, err := getShoppingListService()
 	if err != nil {
 		return err
 	}
@@ -28,7 +28,7 @@ func (command shoppingListCommand) Execute(commandParams []string) error {
 	commandParamsLength := len(commandParams)
 
 	if commandParamsLength == 1 {
-		err = trelloService.GetShoppingList()
+		err = shoppingListService.GetShoppingList()
 		if err != nil {
 			return err
 		}
@@ -37,14 +37,14 @@ func (command shoppingListCommand) Execute(commandParams []string) error {
 	}
 
 	if commandParams[1] == "add" {
-		err = trelloService.AddItemToShoppingList(commandParams[2])
+		err = shoppingListService.AddItemToShoppingList(commandParams[2])
 		if err != nil {
 			return err
 		}
 	}
 
 	if commandParams[1] == "delete" || commandParams[1] == "del" {
-		err = trelloService.DeleteItemFromShoppingList(commandParams[2])
+		err = shoppingListService.DeleteItemFromShoppingList(commandParams[2])
 		if err != nil {
 			return err
 		}

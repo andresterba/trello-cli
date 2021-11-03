@@ -22,7 +22,7 @@ func (command todoCommand) IsForCommand(commandParams []string) bool {
 }
 
 func (command todoCommand) Execute(commandParams []string) error {
-	trelloService, err := getTrelloService()
+	todoService, err := getTodoService()
 	if err != nil {
 		return err
 	}
@@ -31,7 +31,7 @@ func (command todoCommand) Execute(commandParams []string) error {
 
 	if commandParamsLength == 1 {
 		fmt.Println("Tasks that are due today:")
-		err = trelloService.GetCardsThatAreDueToday()
+		err = todoService.GetCardsThatAreDueToday()
 		if err != nil {
 			return err
 		}
@@ -40,7 +40,7 @@ func (command todoCommand) Execute(commandParams []string) error {
 	}
 
 	if commandParams[1] == "month" {
-		err = trelloService.GetCardsThatAreDueThisMonth()
+		err = todoService.GetCardsThatAreDueThisMonth()
 		if err != nil {
 			return err
 		}

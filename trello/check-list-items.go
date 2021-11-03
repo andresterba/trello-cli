@@ -6,7 +6,7 @@ import (
 	"github.com/adlio/trello"
 )
 
-func printCheckListItems(checklist *trello.Checklist) {
+func PrintCheckListItems(checklist *trello.Checklist) {
 	for _, item := range checklist.CheckItems {
 		printCheckListItem(item)
 	}

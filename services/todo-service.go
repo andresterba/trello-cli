@@ -1,14 +1,29 @@
-package trello
+package services
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/adlio/trello"
+	t "github.com/andresterba/trello-cli/trello"
 )
 
-func (ts *TrelloService) GetCardsThatAreDueToday() error {
-	cards, err := ts.getAllCardsOnBoard()
+type TodoService struct {
+	trelloService *t.TrelloService
+	todoBoard     string
+}
+
+func NewTodoService(
+	trelloService *t.TrelloService,
+	todoBoard string,
+) *TodoService {
+	return &TodoService{
+		trelloService,
+		todoBoard,
+	}
+}
+
+func (ts *TodoService) GetCardsThatAreDueToday() error {
+	cards, err := ts.trelloService.GetAllCardsOnBoard(ts.todoBoard)
 	if err != nil {
 		return err
 	}
@@ -21,15 +36,15 @@ func (ts *TrelloService) GetCardsThatAreDueToday() error {
 		}
 	}
 
-	cardsDueToday = sortCardsByDueDate(cardsDueToday)
+	cardsDueToday = t.SortCardsByDueDate(cardsDueToday)
 
-	printCards(cardsDueToday)
+	t.PrintCards(cardsDueToday)
 
 	return nil
 }
 
-func (ts *TrelloService) GetCardsThatAreDueThisMonth() error {
-	cards, err := ts.getAllCardsOnBoard()
+func (ts *TodoService) GetCardsThatAreDueThisMonth() error {
+	cards, err := ts.trelloService.GetAllCardsOnBoard(ts.todoBoard)
 	if err != nil {
 		return err
 	}
@@ -42,25 +57,11 @@ func (ts *TrelloService) GetCardsThatAreDueThisMonth() error {
 		}
 	}
 
-	cardsDueThisMonth = sortCardsByDueDate(cardsDueThisMonth)
+	cardsDueThisMonth = t.SortCardsByDueDate(cardsDueThisMonth)
 
-	printCards(cardsDueThisMonth)
+	t.PrintCards(cardsDueThisMonth)
 
 	return nil
-}
-
-func (ts *TrelloService) getAllCardsOnBoard() ([]*trello.Card, error) {
-	board, err := ts.client.GetBoard(ts.config.TodoBoardID, trello.Defaults())
-	if err != nil {
-		return nil, fmt.Errorf("could not find board with ID %s", ts.config.TodoBoardID)
-	}
-
-	cards, err := board.GetCards(trello.Defaults())
-	if err != nil {
-		return nil, err
-	}
-
-	return cards, nil
 }
 
 func isDueSetOnCard(card *trello.Card) bool {

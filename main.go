@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"gitlab.cloudf.de/andre/trello-cli/commands"
+	"github.com/andresterba/trello-cli/commands"
 )
 
 func checkForError(err error) {
