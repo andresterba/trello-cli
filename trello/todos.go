@@ -13,12 +13,17 @@ func (ts *TrelloService) GetCardsThatAreDueToday() error {
 		return err
 	}
 
+	var cardsDueToday []*trello.Card
+
 	for _, card := range cards {
 		if isDueSetOnCard(card) && isCardDueToday(*card.Due) {
-			printCard(card)
+			cardsDueToday = append(cardsDueToday, card)
 		}
-
 	}
+
+	cardsDueToday = sortCardsByDueDate(cardsDueToday)
+
+	printCards(cardsDueToday)
 
 	return nil
 }
@@ -29,20 +34,25 @@ func (ts *TrelloService) GetCardsThatAreDueThisMonth() error {
 		return err
 	}
 
+	var cardsDueThisMonth []*trello.Card
+
 	for _, card := range cards {
 		if isDueSetOnCard(card) && isCardDueThisMonth(*card.Due) {
-			printCard(card)
+			cardsDueThisMonth = append(cardsDueThisMonth, card)
 		}
-
 	}
+
+	cardsDueThisMonth = sortCardsByDueDate(cardsDueThisMonth)
+
+	printCards(cardsDueThisMonth)
 
 	return nil
 }
 
 func (ts *TrelloService) getAllCardsOnBoard() ([]*trello.Card, error) {
-	board, err := ts.client.GetBoard(ts.config.BoardID, trello.Defaults())
+	board, err := ts.client.GetBoard(ts.config.TodoBoardID, trello.Defaults())
 	if err != nil {
-		return nil, fmt.Errorf("could not find board with ID %s", ts.config.BoardID)
+		return nil, fmt.Errorf("could not find board with ID %s", ts.config.TodoBoardID)
 	}
 
 	cards, err := board.GetCards(trello.Defaults())

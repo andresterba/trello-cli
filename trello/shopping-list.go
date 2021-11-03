@@ -55,9 +55,9 @@ func (ts *TrelloService) DeleteItemFromShoppingList(itemName string) error {
 }
 
 func (ts *TrelloService) getShoppingCardChecklist() (*trello.Checklist, error) {
-	board, err := ts.client.GetBoard(ts.config.BoardID, trello.Defaults())
+	board, err := ts.client.GetBoard(ts.config.ShoppingBoardID, trello.Defaults())
 	if err != nil {
-		return nil, fmt.Errorf("could not find board with ID %s", ts.config.BoardID)
+		return nil, fmt.Errorf("could not find board with ID %s", ts.config.ShoppingBoardID)
 	}
 
 	cards, err := board.GetCards(trello.Defaults())

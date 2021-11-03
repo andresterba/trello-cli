@@ -14,7 +14,7 @@ type TrelloService struct {
 
 func CreateNewTrelloService(config *config.Config) (*TrelloService, error) {
 	client := trello.NewClient(config.AppKey, config.Token)
-	if !isTrelloClientWorking(client, config.BoardID) {
+	if !isTrelloClientWorking(client, config.ShoppingBoardID) {
 		return nil, fmt.Errorf(
 			"could not connect to the trello api. Please check your tokens or the board  id",
 		)

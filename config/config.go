@@ -21,8 +21,9 @@ const (
 type Config struct {
 	AppKey               string `json:"app_key"`
 	Token                string `json:"token"`
-	BoardID              string `json:"board_id"`
+	ShoppingBoardID      string `json:"shopping_board_id"`
 	ShoppingListCardName string `json:"shopping_list_card_name"`
+	TodoBoardID          string `json:"todo_board_id"`
 }
 
 func GetConfigPath() string {

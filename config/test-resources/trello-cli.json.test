@@ -1,6 +1,7 @@
 {
 	"app_key": "my-app-key-1337",
 	"token": "my-token-1337",
-	"board_id": "board-id-wasd",
-    "shopping_list_card_name": "shopping-list"
+	"shopping_board_id": "board-id-wasd",
+    "shopping_list_card_name": "shopping-list",
+    "todo_board_id": "board-id-todo"
 }
