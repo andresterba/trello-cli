@@ -64,6 +64,27 @@ func (ts *TodoService) GetCardsThatAreDueThisMonth() error {
 	return nil
 }
 
+func (ts *TodoService) GetCardsThatAreOverDue() error {
+	cards, err := ts.trelloService.GetAllCardsOnBoard(ts.todoBoard)
+	if err != nil {
+		return err
+	}
+
+	var cardsDueToday []*trello.Card
+
+	for _, card := range cards {
+		if isDueSetOnCard(card) && isCardOverDue(*card.Due) && !isCardDueCompleted(card) {
+			cardsDueToday = append(cardsDueToday, card)
+		}
+	}
+
+	cardsDueToday = t.SortCardsByDueDate(cardsDueToday)
+
+	t.PrintCards(cardsDueToday)
+
+	return nil
+}
+
 func isDueSetOnCard(card *trello.Card) bool {
 	return card.Due != nil
 }
@@ -79,6 +100,21 @@ func isCardDueToday(dueTime time.Time) bool {
 	if (year == yearNow) && (month == monthNow) && (day == dayNow) {
 		return true
 	}
+
+	return false
+}
+
+func isCardOverDue(dueTime time.Time) bool {
+	// year, month, day := dueTime.Date()
+	// yearNow, monthNow, dayNow := time.Now().Date()
+
+	if dueTime.Before(time.Now()) {
+		return true
+	}
+
+	// if (year == yearNow) && (month == monthNow) && (day == dayNow) {
+	// 	return true
+	// }
 
 	return false
 }

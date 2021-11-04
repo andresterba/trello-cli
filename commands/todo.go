@@ -10,7 +10,7 @@ func init() {
 }
 
 func (command todoCommand) GetInformation() (string, string) {
-	return "version", "Print current version."
+	return "todo", "Print current todo's."
 }
 
 func (command todoCommand) IsForCommand(commandParams []string) bool {
@@ -39,8 +39,14 @@ func (command todoCommand) Execute(commandParams []string) error {
 		return nil
 	}
 
-	if commandParams[1] == "month" {
+	switch commandParams[1] {
+	case "month":
 		err = todoService.GetCardsThatAreDueThisMonth()
+		if err != nil {
+			return err
+		}
+	case "overdue":
+		err = todoService.GetCardsThatAreOverDue()
 		if err != nil {
 			return err
 		}
