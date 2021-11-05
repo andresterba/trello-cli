@@ -105,18 +105,7 @@ func isCardDueToday(dueTime time.Time) bool {
 }
 
 func isCardOverDue(dueTime time.Time) bool {
-	// year, month, day := dueTime.Date()
-	// yearNow, monthNow, dayNow := time.Now().Date()
-
-	if dueTime.Before(time.Now()) {
-		return true
-	}
-
-	// if (year == yearNow) && (month == monthNow) && (day == dayNow) {
-	// 	return true
-	// }
-
-	return false
+	return dueTime.Before(time.Now())
 }
 
 func isCardDueThisMonth(dueTime time.Time) bool {
