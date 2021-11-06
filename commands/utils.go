@@ -69,7 +69,7 @@ func getShoppingListService() (*services.ShoppingListService, error) {
 func getBoardIDForCurrentContext() (string, error) {
 	config, err := getConfig()
 	if err != nil {
-		return "nil", err
+		return "", err
 	}
 
 	switch config.DefaultContext {
@@ -80,4 +80,13 @@ func getBoardIDForCurrentContext() (string, error) {
 	}
 
 	return "", errors.New("default context in config is not valid")
+}
+
+func getCurrentContext() (string, error) {
+	config, err := getConfig()
+	if err != nil {
+		return "", err
+	}
+
+	return config.DefaultContext, nil
 }

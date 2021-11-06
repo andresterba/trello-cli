@@ -1,6 +1,8 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type todoCommand struct {
 }
@@ -29,8 +31,13 @@ func (command todoCommand) Execute(commandParams []string) error {
 
 	commandParamsLength := len(commandParams)
 
+	context, err := getCurrentContext()
+	if err != nil {
+		return err
+	}
+
 	if commandParamsLength == 1 {
-		fmt.Println("Tasks that are due today:")
+		fmt.Printf("Tasks that are due %s for context %s:\n", red("today"), red(context))
 		err = todoService.GetCardsThatAreDueToday()
 		if err != nil {
 			return err
