@@ -24,17 +24,12 @@ func (command todoCommand) IsForCommand(commandParams []string) bool {
 }
 
 func (command todoCommand) Execute(commandParams []string) error {
-	todoService, err := getTodoService()
+	todoService, context, err := getTodoService()
 	if err != nil {
 		return err
 	}
 
 	commandParamsLength := len(commandParams)
-
-	context, err := getCurrentContext()
-	if err != nil {
-		return err
-	}
 
 	if commandParamsLength == 1 {
 		fmt.Printf("Tasks that are due %s for context %s:\n", red("today"), red(context))
@@ -48,11 +43,13 @@ func (command todoCommand) Execute(commandParams []string) error {
 
 	switch commandParams[1] {
 	case "month":
+		fmt.Printf("Tasks that are due %s for context %s:\n", red("this month"), red(context))
 		err = todoService.GetCardsThatAreDueThisMonth()
 		if err != nil {
 			return err
 		}
 	case "overdue":
+		fmt.Printf("Tasks that are %s for context %s:\n", red("overdue"), red(context))
 		err = todoService.GetCardsThatAreOverDue()
 		if err != nil {
 			return err

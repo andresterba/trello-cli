@@ -32,21 +32,28 @@ func getTrelloService() (*trello.TrelloService, error) {
 	return trelloService, nil
 }
 
-func getTodoService() (*services.TodoService, error) {
+func getTodoService() (*services.TodoService, string, error) {
 	trelloService, err := getTrelloService()
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
 
 	trelloBoardID, err := getBoardIDForCurrentContext()
 	if err != nil {
-		return nil, err
+		return nil, "", err
+	}
+
+	currentContext, err := getCurrentContext()
+	if err != nil {
+		return nil, "", err
 	}
 
 	return services.NewTodoService(
-		trelloService,
-		trelloBoardID,
-	), nil
+			trelloService,
+			trelloBoardID,
+		),
+		currentContext,
+		nil
 }
 
 func getShoppingListService() (*services.ShoppingListService, error) {
