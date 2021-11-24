@@ -9,6 +9,7 @@ type shoppingListCommand struct {
 func init() {
 	slc := shoppingListCommand{}
 	slc.subCommands = make(map[string]subCommandFunction)
+	slc.registerSubCommands()
 
 	RegisterCommand(slc)
 }

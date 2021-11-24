@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -11,6 +12,7 @@ type todoCommand struct {
 func init() {
 	tc := todoCommand{}
 	tc.subCommands = make(map[string]subCommandFunction)
+	tc.registerSubCommands()
 
 	RegisterCommand(tc)
 }
@@ -45,19 +47,16 @@ func (command todoCommand) Execute(commandParams []string) error {
 		return nil
 	}
 
-	switch commandParams[1] {
-	case "month":
-		fmt.Printf("Tasks that are due %s for context %s:\n", red("this month"), red(context))
-		err = todoService.GetCardsThatAreDueThisMonth()
-		if err != nil {
-			return err
-		}
-	case "overdue":
-		fmt.Printf("Tasks that are %s for context %s:\n", red("overdue"), red(context))
-		err = todoService.GetCardsThatAreOverDue()
-		if err != nil {
-			return err
-		}
+	possibleSubCommand := commandParams[1]
+	subCommandFn := command.subCommands[possibleSubCommand]
+
+	if subCommandFn == nil {
+		return errors.New("could not find command")
+	}
+
+	err = subCommandFn(commandParams[1:])
+	if err != nil {
+		return err
 	}
 
 	return nil
@@ -68,4 +67,36 @@ func (command todoCommand) registerSubCommand(name string, fn subCommandFunction
 }
 
 func (command todoCommand) registerSubCommands() {
+	command.registerSubCommand("month", command.subCommandDueThisMonth)
+	command.registerSubCommand("overdue", command.subCommandOverdue)
+}
+
+func (command todoCommand) subCommandDueThisMonth(commandParams []string) error {
+	todoService, context, err := getTodoService()
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Tasks that are due %s for context %s:\n", red("this month"), red(context))
+	err = todoService.GetCardsThatAreDueThisMonth()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (command todoCommand) subCommandOverdue(commandParams []string) error {
+	todoService, context, err := getTodoService()
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Tasks that are %s for context %s:\n", red("overdue"), red(context))
+	err = todoService.GetCardsThatAreOverDue()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
