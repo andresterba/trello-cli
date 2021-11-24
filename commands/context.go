@@ -1,6 +1,7 @@
 package commands
 
 type contextCommand struct {
+	subCommands map[string]subCommandFunction
 }
 
 const (
@@ -9,7 +10,10 @@ const (
 )
 
 func init() {
-	RegisterCommand(contextCommand{})
+	cc := contextCommand{}
+	cc.subCommands = make(map[string]subCommandFunction)
+
+	RegisterCommand(cc)
 }
 
 func (command contextCommand) GetInformation() (string, string) {
@@ -50,4 +54,11 @@ func checkIfContextIsValid(context string) bool {
 	}
 
 	return false
+}
+
+func (command contextCommand) registerSubCommand(name string, fn subCommandFunction) {
+	command.subCommands[name] = fn
+}
+
+func (command contextCommand) registerSubCommands() {
 }

@@ -5,10 +5,14 @@ import (
 )
 
 type todoCommand struct {
+	subCommands map[string]subCommandFunction
 }
 
 func init() {
-	RegisterCommand(todoCommand{})
+	tc := todoCommand{}
+	tc.subCommands = make(map[string]subCommandFunction)
+
+	RegisterCommand(tc)
 }
 
 func (command todoCommand) GetInformation() (string, string) {
@@ -57,4 +61,11 @@ func (command todoCommand) Execute(commandParams []string) error {
 	}
 
 	return nil
+}
+
+func (command todoCommand) registerSubCommand(name string, fn subCommandFunction) {
+	command.subCommands[name] = fn
+}
+
+func (command todoCommand) registerSubCommands() {
 }

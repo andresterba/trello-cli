@@ -1,10 +1,16 @@
 package commands
 
+import "errors"
+
 type shoppingListCommand struct {
+	subCommands map[string]subCommandFunction
 }
 
 func init() {
-	RegisterCommand(shoppingListCommand{})
+	slc := shoppingListCommand{}
+	slc.subCommands = make(map[string]subCommandFunction)
+
+	RegisterCommand(slc)
 }
 
 func (command shoppingListCommand) GetInformation() (string, string) {
@@ -36,18 +42,54 @@ func (command shoppingListCommand) Execute(commandParams []string) error {
 		return nil
 	}
 
-	if commandParams[1] == "add" {
-		err = shoppingListService.AddItemToShoppingList(commandParams[2])
-		if err != nil {
-			return err
-		}
+	possibleSubCommand := commandParams[1]
+	subCommandFn := command.subCommands[possibleSubCommand]
+
+	if subCommandFn == nil {
+		return errors.New("could not find command")
 	}
 
-	if commandParams[1] == "delete" || commandParams[1] == "del" {
-		err = shoppingListService.DeleteItemFromShoppingList(commandParams[2])
-		if err != nil {
-			return err
-		}
+	err = subCommandFn(commandParams[1:])
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (command shoppingListCommand) registerSubCommand(name string, fn subCommandFunction) {
+	command.subCommands[name] = fn
+}
+
+func (command shoppingListCommand) registerSubCommands() {
+	command.registerSubCommand("add", command.SubCommandAdd)
+	command.registerSubCommand("delete", command.SubCommandAdd)
+	command.registerSubCommand("del", command.SubCommandAdd)
+}
+
+func (command shoppingListCommand) SubCommandAdd(commandParams []string) error {
+	shoppingListService, err := getShoppingListService()
+	if err != nil {
+		return err
+	}
+
+	err = shoppingListService.AddItemToShoppingList(commandParams[1])
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (command shoppingListCommand) SubCommandDelete(commandParams []string) error {
+	shoppingListService, err := getShoppingListService()
+	if err != nil {
+		return err
+	}
+
+	err = shoppingListService.DeleteItemFromShoppingList(commandParams[1])
+	if err != nil {
+		return err
 	}
 
 	return nil
