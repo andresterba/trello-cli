@@ -24,12 +24,17 @@ type WorkConfig struct {
 }
 
 type PersonalConfig struct {
-	BoardID string `json:"board_id"`
+	BoardID        string           `json:"board_id,omitempty"`
+	RecurringTasks []RecurringTasks `json:"recurring_tasks,omitempty"`
 }
 
 type ShoppingConfig struct {
 	BoardID      string `json:"board_id"`
 	ListCardName string `json:"list_card_name"`
+}
+
+type RecurringTasks struct {
+	Name string `json:"name,omitempty"`
 }
 
 type Config struct {

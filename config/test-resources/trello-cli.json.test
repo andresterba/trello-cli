@@ -6,7 +6,11 @@
         "board_id": "board-id-work"
     },
     "personal_config": {
-        "board_id": "board-id-personal"
+        "board_id": "board-id-personal",
+        "recurring_tasks": [
+            { "name": "Recurring 1"},
+            { "name": "Recurring 2"}
+        ]
     },
     "shopping_config": {
         "board_id": "board-id-shopping",

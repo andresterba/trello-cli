@@ -22,6 +22,8 @@ func TestGetConfig(test *testing.T) {
 	testForString(test, "my-app-key-1337", config.AppKey)
 	testForString(test, "my-token-1337", config.Token)
 	testForString(test, "board-id-personal", config.PersonalConfig.BoardID)
+	testForString(test, "Recurring 1", config.PersonalConfig.RecurringTasks[0].Name)
+	testForString(test, "Recurring 2", config.PersonalConfig.RecurringTasks[1].Name)
 	testForString(test, "board-id-shopping", config.ShoppingConfig.BoardID)
 	testForString(test, "shopping-list", config.ShoppingConfig.ListCardName)
 	testForString(test, "board-id-work", config.WorkConfig.BoardID)
