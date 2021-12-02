@@ -56,6 +56,7 @@ func checkIfContextIsValid(context string) bool {
 	return false
 }
 
+//lint:ignore U1000 will be implemented soon
 func (command contextCommand) registerSubCommand(name string, fn subCommandFunction) {
 	command.subCommands[name] = fn
 }
