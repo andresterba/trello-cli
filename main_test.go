@@ -39,10 +39,8 @@ func TestMain(t *testing.T) {
 trello-cli [command] [options]
 commands:
     context - Set context for other commands.
-    recurring - Print or add recurring todo's.
     version - Print current version.
     todo - Print current todo's.
-    id - Print IDs of Trello items.
     shopping-list - Interact with our shopping-list.
 `
 
