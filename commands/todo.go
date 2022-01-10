@@ -68,6 +68,7 @@ func (command todoCommand) registerSubCommand(name string, fn subCommandFunction
 
 func (command todoCommand) registerSubCommands() {
 	command.registerSubCommand("month", command.subCommandDueThisMonth)
+	command.registerSubCommand("week", command.subCommandDueThisWeek)
 	command.registerSubCommand("overdue", command.subCommandOverdue)
 }
 
@@ -94,6 +95,21 @@ func (command todoCommand) subCommandOverdue(commandParams []string) error {
 
 	fmt.Printf("Tasks that are %s for context %s:\n", red("overdue"), red(context))
 	err = todoService.GetCardsThatAreOverDue()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (command todoCommand) subCommandDueThisWeek(commandParams []string) error {
+	todoService, context, err := getTodoService()
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Tasks that are due %s for context %s:\n", red("this week"), red(context))
+	err = todoService.GetCardsThatAreDueThisWeek()
 	if err != nil {
 		return err
 	}

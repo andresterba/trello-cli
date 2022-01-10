@@ -43,6 +43,27 @@ func (ts *TodoService) GetCardsThatAreDueToday() error {
 	return nil
 }
 
+func (ts *TodoService) GetCardsThatAreDueThisWeek() error {
+	cards, err := ts.trelloService.GetAllCardsOnBoard(ts.todoBoard)
+	if err != nil {
+		return err
+	}
+
+	var cardsDueThisWeek []*trello.Card
+
+	for _, card := range cards {
+		if isDueSetOnCard(card) && isCardDueThisWeek(*card.Due) && !isCardDueCompleted(card) {
+			cardsDueThisWeek = append(cardsDueThisWeek, card)
+		}
+	}
+
+	cardsDueThisWeek = t.SortCardsByDueDate(cardsDueThisWeek)
+
+	t.PrintCards(cardsDueThisWeek)
+
+	return nil
+}
+
 func (ts *TodoService) GetCardsThatAreDueThisMonth() error {
 	cards, err := ts.trelloService.GetAllCardsOnBoard(ts.todoBoard)
 	if err != nil {
@@ -113,6 +134,17 @@ func isCardDueThisMonth(dueTime time.Time) bool {
 	yearNow, monthNow, _ := time.Now().Date()
 
 	if (year == yearNow) && (month == monthNow) {
+		return true
+	}
+
+	return false
+}
+
+func isCardDueThisWeek(dueTime time.Time) bool {
+	yearDue, weekDue := dueTime.ISOWeek()
+	yearNow, weekNow := dueTime.ISOWeek()
+
+	if (yearDue == yearNow) && (weekDue == weekNow) {
 		return true
 	}
 
