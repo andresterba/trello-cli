@@ -109,3 +109,12 @@ func (ts *TrelloService) GetAllBoards() ([]*trello.Board, error) {
 
 	return boards, nil
 }
+
+func (ts *TrelloService) GetAllListsOnBoard(boardID string) ([]*trello.List, error) {
+	board, err := ts.client.GetBoard(boardID, trello.Defaults())
+	if err != nil {
+		return nil, fmt.Errorf("could not find board with ID %s", boardID)
+	}
+
+	return board.Lists, nil
+}
