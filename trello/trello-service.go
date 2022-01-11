@@ -100,3 +100,12 @@ func (ts *TrelloService) CreateChecklistItem(checklist *trello.Checklist, checkI
 
 	return nil
 }
+
+func (ts *TrelloService) GetAllBoards() ([]*trello.Board, error) {
+	boards, err := ts.client.GetMyBoards()
+	if err != nil {
+		return nil, err
+	}
+
+	return boards, nil
+}

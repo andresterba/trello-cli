@@ -39,6 +39,7 @@ func TestMain(t *testing.T) {
 trello-cli [command] [options]
 commands:
     context - Set context for other commands.
+    list - Print board and card ids.
     version - Print current version.
     todo - Print current todo's.
     shopping-list - Interact with our shopping-list.
