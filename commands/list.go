@@ -61,6 +61,7 @@ func (command listCommand) registerSubCommands() {
 	command.registerSubCommand("boards", command.listAllBoards)
 	command.registerSubCommand("cards", command.listAllCardsOnBoard)
 	command.registerSubCommand("lists", command.listAllListsOnBoard)
+	command.registerSubCommand("labels", command.listAllLabelsOnBoard)
 }
 
 func (command listCommand) listAllBoards(params []string) error {
@@ -130,6 +131,32 @@ func (command listCommand) listAllListsOnBoard(params []string) error {
 	fmt.Printf("%-24s: %-24s\n", "---------------------------------------", "-----------------------")
 	for _, list := range lists {
 		fmt.Printf("%-24s: %-24s\n", list.ID, list.Name)
+	}
+
+	return nil
+}
+
+func (command listCommand) listAllLabelsOnBoard(params []string) error {
+	if len(params) != 2 {
+		fmt.Println("Please provide a single board ID.")
+
+		return nil
+	}
+
+	trelloService, err := getTrelloService()
+	if err != nil {
+		return err
+	}
+
+	labels, err := trelloService.GetAllLabelsOnBoard(params[1])
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("%-24s: %-18s %-10s\n", "label.ID", "label.Name", "label.Color")
+	fmt.Printf("%-24s: %-18s  %-10s\n", "-----------------------", "-----------------", "---------")
+	for _, label := range labels {
+		fmt.Printf("%-24s: %-18s %-10s\n", label.ID, label.Name, label.Color)
 	}
 
 	return nil
