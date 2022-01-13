@@ -40,6 +40,7 @@ trello-cli [command] [options]
 commands:
     context - Set context for other commands.
     list - Print board and card ids.
+    recurring - Print or add recurring todo's.
     version - Print current version.
     todo - Print current todo's.
     shopping-list - Interact with our shopping-list.

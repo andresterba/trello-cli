@@ -8,8 +8,26 @@
     "personal_config": {
         "board_id": "board-id-personal",
         "recurring_tasks": [
-            { "name": "Recurring 1"},
-            { "name": "Recurring 2"}
+            {
+                "name": "Recurring 1",
+                "listid": "some-list-id",
+                "labels": [
+                    "Test-Label-1",
+                    "Test-Label-2"
+                ]
+            },
+            {
+                "name": "Recurring 2",
+                "listid": "some-list-id",
+                "labels": [
+                    "Test-Label-1",
+                    "Test-Label-2"
+                ]
+            },
+            {
+                "name": "Recurring 3",
+                "listid": "some-list-id"
+            }
         ]
     },
     "shopping_config": {

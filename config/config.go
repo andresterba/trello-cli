@@ -34,7 +34,9 @@ type ShoppingConfig struct {
 }
 
 type RecurringTasks struct {
-	Name string `json:"name,omitempty"`
+	Name   string   `json:"name,omitempty"`
+	ListID string   `json:"listid,omitempty"`
+	Labels []string `json:"labels,omitempty"`
 }
 
 type Config struct {

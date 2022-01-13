@@ -22,6 +22,22 @@ func NewTodoService(
 	}
 }
 
+func (ts *TodoService) CreateNewCard(name string, listID string) error {
+	card := trello.Card{
+		Name:    name,
+		IDBoard: ts.todoBoard,
+		IDList:  listID,
+		// TODO: Labels
+		// IDLabels: []string{"labelID1", "labelID2"},
+	}
+
+	err := ts.trelloService.CreateCard(&card)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (ts *TodoService) GetCardsThatAreDueToday() error {
 	cards, err := ts.trelloService.GetAllCardsOnBoard(ts.todoBoard)
 	if err != nil {
