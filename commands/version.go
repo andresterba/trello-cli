@@ -23,6 +23,7 @@ func (command versionCommand) IsForCommand(commandParams []string) bool {
 
 func (command versionCommand) Execute(commandParams []string) error {
 	fmt.Println("0.0.0")
+
 	return nil
 }
 
