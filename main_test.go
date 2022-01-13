@@ -41,9 +41,9 @@ commands:
     context - Set context for other commands.
     list - Print board and card ids.
     recurring - Print or add recurring todo's.
-    version - Print current version.
+    shopping-list - Interact with your shopping-list.
     todo - Print current todo's.
-    shopping-list - Interact with our shopping-list.
+    version - Print current version.
 `
 
 	output, err = runCommand.CombinedOutput()

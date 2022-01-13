@@ -15,7 +15,7 @@ func init() {
 }
 
 func (command shoppingListCommand) GetInformation() (string, string) {
-	return "version", "Print current version."
+	return "shopping-list", "Interact with your shopping-list."
 }
 
 func (command shoppingListCommand) IsForCommand(commandParams []string) bool {

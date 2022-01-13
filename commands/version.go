@@ -10,7 +10,7 @@ func init() {
 }
 
 func (command versionCommand) GetInformation() (string, string) {
-	return "shopping-list", "Interact with our shopping-list."
+	return "version", "Print current version."
 }
 
 func (command versionCommand) IsForCommand(commandParams []string) bool {
