@@ -102,8 +102,9 @@ func (command recurringCommand) subCommandAdd(commandParams []string) error {
 	if err != nil {
 		return err
 	}
-	existingCardsLookupMap := make(map[string]*trello.Card)
 
+	// TODO: improve lookup to check if card exists on specific list instead of whole board.
+	existingCardsLookupMap := make(map[string]*trello.Card)
 	for _, card := range existingCards {
 		existingCardsLookupMap[card.Name] = card
 	}
@@ -111,7 +112,7 @@ func (command recurringCommand) subCommandAdd(commandParams []string) error {
 	for _, rt := range config.PersonalConfig.RecurringTasks {
 		_, alreadyExists := existingCardsLookupMap[rt.Name]
 		if !alreadyExists {
-			err := todoService.CreateNewCard(rt.Name, rt.ListID)
+			err := todoService.CreateNewCard(rt.Name, rt.ListID, rt.Labels)
 			if err != nil {
 				return err
 			}

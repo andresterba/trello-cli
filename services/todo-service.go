@@ -22,13 +22,12 @@ func NewTodoService(
 	}
 }
 
-func (ts *TodoService) CreateNewCard(name string, listID string) error {
+func (ts *TodoService) CreateNewCard(name string, listID string, labelIDs []string) error {
 	card := trello.Card{
-		Name:    name,
-		IDBoard: ts.todoBoard,
-		IDList:  listID,
-		// TODO: Labels
-		// IDLabels: []string{"labelID1", "labelID2"},
+		Name:     name,
+		IDBoard:  ts.todoBoard,
+		IDList:   listID,
+		IDLabels: labelIDs,
 	}
 
 	err := ts.trelloService.CreateCard(&card)
