@@ -101,6 +101,15 @@ func (ts *TrelloService) CreateChecklistItem(checklist *trello.Checklist, checkI
 	return nil
 }
 
+func (ts *TrelloService) CreateCard(card *trello.Card) error {
+	err := ts.client.CreateCard(card, trello.Defaults())
+	if err != nil {
+		return err
+	}
+
+	return err
+}
+
 func (ts *TrelloService) GetAllBoards() ([]*trello.Board, error) {
 	boards, err := ts.client.GetMyBoards()
 	if err != nil {
@@ -116,5 +125,10 @@ func (ts *TrelloService) GetAllListsOnBoard(boardID string) ([]*trello.List, err
 		return nil, fmt.Errorf("could not find board with ID %s", boardID)
 	}
 
-	return board.Lists, nil
+	lists, err := board.GetLists()
+	if err != nil {
+		return nil, fmt.Errorf("could not fetch lists of board with ID %s", boardID)
+	}
+
+	return lists, nil
 }

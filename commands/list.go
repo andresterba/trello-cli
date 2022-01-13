@@ -126,8 +126,8 @@ func (command listCommand) listAllListsOnBoard(params []string) error {
 		return err
 	}
 
-	fmt.Printf("%-20s: %-24s\n", "list.ID", "list.Name")
-	fmt.Printf("%-20s: %-24s\n", "---------------------------------------", "-----------------------")
+	fmt.Printf("%-24s: %-24s\n", "list.ID", "list.Name")
+	fmt.Printf("%-24s: %-24s\n", "---------------------------------------", "-----------------------")
 	for _, list := range lists {
 		fmt.Printf("%-24s: %-24s\n", list.ID, list.Name)
 	}
