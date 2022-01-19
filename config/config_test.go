@@ -50,3 +50,13 @@ func TestPersonalConfig(test *testing.T) {
 	testForString(test, "Recurring 3", config.PersonalConfig.RecurringTasks[2].Name)
 	testForString(test, "some-list-id", config.PersonalConfig.RecurringTasks[0].ListID)
 }
+
+func TestProjectsConfig(test *testing.T) {
+	config, err := LoadConfig("./test-resources/trello-cli.json.test")
+	if err != nil {
+		test.Errorf("%s", err)
+		test.FailNow()
+	}
+
+	testForString(test, "board-id-projects", config.ProjectsConfig.BoardID)
+}

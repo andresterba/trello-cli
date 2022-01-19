@@ -33,6 +33,10 @@ type ShoppingConfig struct {
 	ListCardName string `json:"list_card_name"`
 }
 
+type ProjectsConfig struct {
+	BoardID string `json:"board_id"`
+}
+
 type RecurringTasks struct {
 	Name   string   `json:"name,omitempty"`
 	ListID string   `json:"listid,omitempty"`
@@ -46,6 +50,7 @@ type Config struct {
 	WorkConfig     WorkConfig     `json:"work_config,omitempty"`
 	PersonalConfig PersonalConfig `json:"personal_config,omitempty"`
 	ShoppingConfig ShoppingConfig `json:"shopping_config,omitempty"`
+	ProjectsConfig ProjectsConfig `json:"projects_config,omitempty"`
 }
 
 func GetConfigPath() string {
