@@ -7,6 +7,7 @@ type contextCommand struct {
 const (
 	WorkContext     = "work"
 	PersonalContext = "personal"
+	ProjectsContext = "projects"
 )
 
 func init() {
@@ -29,15 +30,24 @@ func (command contextCommand) IsForCommand(commandParams []string) bool {
 }
 
 func (command contextCommand) Execute(commandParams []string) error {
+	newContext := commandParams[1]
+
+	err := changeContextTo(newContext)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func changeContextTo(couldBeNewContext string) error {
 	config, err := getConfig()
 	if err != nil {
 		return err
 	}
 
-	newContext := commandParams[1]
-
-	if checkIfContextIsValid(newContext) {
-		config.DefaultContext = newContext
+	if checkIfContextIsValid(couldBeNewContext) {
+		config.DefaultContext = couldBeNewContext
 	}
 
 	err = config.WriteConfig()
@@ -49,7 +59,7 @@ func (command contextCommand) Execute(commandParams []string) error {
 }
 
 func checkIfContextIsValid(context string) bool {
-	if context == PersonalContext || context == WorkContext {
+	if context == PersonalContext || context == WorkContext || context == ProjectsContext {
 		return true
 	}
 

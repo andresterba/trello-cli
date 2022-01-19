@@ -30,16 +30,10 @@ func (command todoCommand) IsForCommand(commandParams []string) bool {
 }
 
 func (command todoCommand) Execute(commandParams []string) error {
-	todoService, context, err := getTodoService()
-	if err != nil {
-		return err
-	}
-
 	commandParamsLength := len(commandParams)
 
 	if commandParamsLength == 1 {
-		fmt.Printf("Tasks that are due %s for context %s:\n", red("today"), red(context))
-		err = todoService.GetCardsThatAreDueToday()
+		err := command.getOverallTasksDueThisWeek()
 		if err != nil {
 			return err
 		}
@@ -54,7 +48,7 @@ func (command todoCommand) Execute(commandParams []string) error {
 		return errors.New("could not find command")
 	}
 
-	err = subCommandFn(commandParams[1:])
+	err := subCommandFn(commandParams[1:])
 	if err != nil {
 		return err
 	}
@@ -104,6 +98,46 @@ func (command todoCommand) subCommandOverdue(commandParams []string) error {
 
 func (command todoCommand) subCommandDueThisWeek(commandParams []string) error {
 	todoService, context, err := getTodoService()
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Tasks that are due %s for context %s:\n", red("this week"), red(context))
+	err = todoService.GetCardsThatAreDueThisWeek()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (command todoCommand) getOverallTasksDueThisWeek() error {
+	changeContextTo(PersonalContext)
+	todoService, context, err := getTodoService()
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Tasks that are due %s for context %s:\n", red("this week"), red(context))
+	err = todoService.GetCardsThatAreDueThisWeek()
+	if err != nil {
+		return err
+	}
+
+	changeContextTo(WorkContext)
+	todoService, context, err = getTodoService()
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Tasks that are due %s for context %s:\n", red("this week"), red(context))
+	err = todoService.GetCardsThatAreDueThisWeek()
+	if err != nil {
+		return err
+	}
+
+	changeContextTo(ProjectsContext)
+	todoService, context, err = getTodoService()
 	if err != nil {
 		return err
 	}

@@ -8,7 +8,7 @@ import (
 )
 
 func PrintCard(position int, card *trello.Card) {
-	fmt.Printf("%d. %s Due: %s\n", position, card.Name, card.Due.Format("Mon _2 Jan"))
+	fmt.Printf("\t%d. %s: %s \n", position, card.Due.Format("Mon _2 Jan"), card.Name)
 }
 
 func SortCardsByDueDate(cards []*trello.Card) []*trello.Card {

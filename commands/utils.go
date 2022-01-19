@@ -84,6 +84,8 @@ func getBoardIDForCurrentContext() (string, error) {
 		return config.PersonalConfig.BoardID, nil
 	case WorkContext:
 		return config.WorkConfig.BoardID, nil
+	case ProjectsContext:
+		return config.ProjectsConfig.BoardID, nil
 	}
 
 	return "", errors.New("default context in config is not valid")
