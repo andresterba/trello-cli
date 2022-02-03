@@ -148,7 +148,7 @@ func isCardDueThisMonth(dueTime time.Time) bool {
 	year, month, _ := dueTime.Date()
 	yearNow, monthNow, _ := time.Now().Date()
 
-	if (year == yearNow) && (month == monthNow) {
+	if (year == yearNow) && (month <= monthNow) {
 		return true
 	}
 
@@ -157,9 +157,9 @@ func isCardDueThisMonth(dueTime time.Time) bool {
 
 func isCardDueThisWeek(dueTime time.Time) bool {
 	yearDue, weekDue := dueTime.ISOWeek()
-	yearNow, weekNow := dueTime.ISOWeek()
+	yearNow, weekNow := time.Now().ISOWeek()
 
-	if (yearDue == yearNow) && (weekDue == weekNow) {
+	if (yearDue == yearNow) && (weekDue <= weekNow) {
 		return true
 	}
 
