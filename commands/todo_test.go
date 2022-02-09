@@ -22,7 +22,7 @@ func TestTodoIsForCommand(t *testing.T) {
 		got := tc.IsForCommand(test.input)
 
 		if got != test.want {
-			t.Errorf("Expected %t, but got %t for param %s", test.want, got, test.input)
+			t.Errorf("Expected %t, but got %t for params %s", test.want, got, test.input)
 		}
 	}
 }

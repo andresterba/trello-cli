@@ -130,7 +130,7 @@ func (command todoCommand) getOverallTasksDueThisWeek() error {
 		return err
 	}
 
-	fmt.Printf("Tasks that are due %s for context %s:\n", red("this week"), red(context))
+	fmt.Printf("\nTasks that are due %s for context %s:\n", red("this week"), red(context))
 	err = todoService.GetCardsThatAreDueThisWeek()
 	if err != nil {
 		return err
@@ -142,7 +142,7 @@ func (command todoCommand) getOverallTasksDueThisWeek() error {
 		return err
 	}
 
-	fmt.Printf("Tasks that are due %s for context %s:\n", red("this week"), red(context))
+	fmt.Printf("\nTasks that are due %s for context %s:\n", red("this week"), red(context))
 	err = todoService.GetCardsThatAreDueThisWeek()
 	if err != nil {
 		return err
