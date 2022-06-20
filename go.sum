@@ -1,5 +1,5 @@
-github.com/adlio/trello v1.9.0 h1:b8R1oic2yksok5McAd+kcfsvTq5sX+Fv8rMTSpBBRq8=
-github.com/adlio/trello v1.9.0/go.mod h1:I4Lti4jf2KxjTNgTqs5W3lLuE78QZZdYbbPnQQGwjOo=
+github.com/adlio/trello v1.10.0 h1:ia/rzoBwJJKr4IqnMlrU6n09CVqeyaahSkEVcV5/gPc=
+github.com/adlio/trello v1.10.0/go.mod h1:I4Lti4jf2KxjTNgTqs5W3lLuE78QZZdYbbPnQQGwjOo=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/fatih/color v1.13.0 h1:8LOYc1KYPPmyKMuN8QV2DNRWNbLo6LZ0iLs8+mlH53w=
