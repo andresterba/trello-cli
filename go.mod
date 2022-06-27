@@ -3,7 +3,7 @@ module github.com/andresterba/trello-cli
 go 1.17
 
 require (
-	github.com/adlio/trello v1.9.0
+	github.com/adlio/trello v1.10.0
 	github.com/fatih/color v1.13.0
 	github.com/stretchr/testify v1.7.2
 )
