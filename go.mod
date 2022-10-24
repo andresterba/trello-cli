@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/adlio/trello v1.10.0
 	github.com/fatih/color v1.13.0
-	github.com/stretchr/testify v1.8.0
+	github.com/stretchr/testify v1.8.1
 )
 
 require (
